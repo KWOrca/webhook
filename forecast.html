@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Lemonade Demand Forecast</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- jQuery 3.6 CDN -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <!-- Font Awesome 5 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+  table, th, td {
+	  border: 1px solid black;
+	  border-collapse: collapse;
+	}
+	th, td {
+		width: 2em;
+		height: 2em;
+	}
+	.chart {
+		font-family: "Courier New";
+		font-size: 1.5em;
+	}
+  </style>
+</head>
+<body>
+	<div class="container">
+		<h1><i class="fa fa-lemon"></i> Lemonade Demand Forecast</h1>
+
+		<p>Click the button to get the most recent 7-day forecast. </p>
+
+		<form>
+
+			<input type="button" class="btn btn-primary" id="btn_1" value="Get Forecast"> <br>
+
+		</form>
+		<br>
+		<div class="chart" id="sun"></div>
+		<div class="chart" id="mon"></div>
+		<div class="chart" id="tue"></div>
+		<div class="chart" id="wed"></div>
+		<div class="chart" id="thur"></div>
+		<div class="chart" id="fri"></div>
+		<div class="chart" id="sat"></div>
+		<br>
+	</div>
+</body>
+<script>
+"use strict";
+
+function makeString(n) {
+        let result = "";
+        for (let i = 0; i < n; i++) {
+            result = result + "X"; 
+        }
+        return result;
+    }
+
+
+// put your work here
+function getForecast() {
+    $.getJSON("https://misdemo.temple.edu/lemonweather/forecast", function(data) {
+        console.log(data);
+
+        for (let i = 0; i < data.length; i++) {
+            let x = data[i][0];
+            let temp = data[i][1]; 
+            let cups = data[i]["weekday"]; 
+
+            
+            if (x == "Sunday") {
+                $("#sun").html("SUN "); 
+                $("#sun").append(makeString(temp) + " "); 
+                $("#sun").append("(" + demand + " cups)"); 
+            } else if (x == "Monday") {
+                $("#mon").html("MON ");
+                $("#mon").append(makeString(temp) + " ");
+                $("#mon").append("(" + demand + " cups)");
+            } else if (x == "Tuesday") {
+                $("#tue").html("TUE ");
+                $("#tue").append(makeString(temp) + " ");
+                $("#tue").append("(" + demand + " cups)");
+            } else if (x == "Wednesday") {
+                $("#wed").html("WED ");
+                $("#wed").append(makeString(temp) + " ");
+                $("#wed").append("(" + demand + " cups)");
+            } else if (x == "Thursday") {
+                $("#thur").html("THUR ");
+                $("#thur").append(makeString(temp) + " ");
+                $("#thur").append("(" + demand + " cups)");
+            } else if (x == "Friday") {
+                $("#fri").html("FRI ");
+                $("#fri").append(makeString(temp) + " ");
+                $("#fri").append("(" + demand + " cups)");
+            } else if (x == "Saturday") {
+                $("#sat").html("SAT ");
+                $("#sat").append(makeString(temp) + " ");
+                $("#sat").append("(" + demand + " cups)");
+            }
+        }
+    });
+}
+
+
+
+
+
+
+ 
+
+
+// this is the click event handler.  You should not edit this code in this assignment.
+$('#btn_1').click(function(){
+	
+	getForecast();
+	
+})
+
+</script>
+</html>
